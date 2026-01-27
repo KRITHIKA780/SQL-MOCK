@@ -1,0 +1,27 @@
+{
+  "name": "sql-quiz-app",
+  "version": "1.0.0",
+  "description": "A beautiful, interactive SQL learning and testing application with 50+ questions covering 8 comprehensive topics.",
+  "main": "app.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KRITHIKA780/SQL-MOCK.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/KRITHIKA780/SQL-MOCK/issues"
+  },
+  "homepage": "https://github.com/KRITHIKA780/SQL-MOCK#readme",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
+    "sqlite3": "^5.1.7"
+  }
+}

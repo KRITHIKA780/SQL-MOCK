@@ -1,5 +1,5 @@
 // Application State
-let currentMode = null; // 'learn' or 'test'
+let currentMode = 'test'; // Default to test mode
 let currentTopic = null;
 let currentQuestions = [];
 let currentQuestionIndex = 0;
@@ -32,8 +32,14 @@ document.addEventListener('DOMContentLoaded', () => {
 // Event Listeners
 function initializeEventListeners() {
     // Mode selection
-    document.getElementById('learn-mode-btn').addEventListener('click', () => selectMode('learn'));
-    document.getElementById('test-mode-btn').addEventListener('click', () => selectMode('test'));
+    const startBtn = document.getElementById('start-test-btn');
+    if (startBtn) {
+        startBtn.addEventListener('click', () => {
+            currentMode = 'test';
+            document.getElementById('topic-screen-title').textContent = 'Select a Topic for Mock Test';
+            showScreen('topic');
+        });
+    }
 
     // Navigation
     document.getElementById('back-to-home').addEventListener('click', () => showScreen('home'));
@@ -74,14 +80,22 @@ function showScreen(screenName) {
 }
 
 // Load Topics
-function loadTopics() {
-    const topicsGrid = document.getElementById('topics-grid');
-    topicsGrid.innerHTML = '';
+async function loadTopics() {
+    try {
+        const response = await fetch('/api/topics');
+        const result = await response.json();
 
-    quizData.topics.forEach(topic => {
-        const topicCard = createTopicCard(topic);
-        topicsGrid.appendChild(topicCard);
-    });
+        const topicsGrid = document.getElementById('topics-grid');
+        topicsGrid.innerHTML = '';
+
+        result.data.forEach(topic => {
+            const topicCard = createTopicCard(topic);
+            topicsGrid.appendChild(topicCard);
+        });
+    } catch (error) {
+        console.error('Error loading topics:', error);
+        document.getElementById('topics-grid').innerHTML = '<p style="color:white; text-align:center;">Error loading topics. Please ensure the backend server is running.</p>';
+    }
 }
 
 // Create Topic Card
@@ -99,7 +113,7 @@ function createTopicCard(topic) {
                     <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
                     <line x1="12" y1="17" x2="12.01" y2="17"/>
                 </svg>
-                ${topic.questions.length} questions
+                ${topic.questionCount} questions
             </span>
             <span class="topic-difficulty difficulty-${topic.difficulty}">
                 ${topic.difficulty}
@@ -107,12 +121,22 @@ function createTopicCard(topic) {
         </div>
     `;
 
-    card.addEventListener('click', () => {
-        currentTopic = topic;
-        if (currentMode === 'learn') {
-            showTutorial(topic);
-        } else {
-            startQuiz(topic);
+    card.addEventListener('click', async () => {
+        // Fetch questions for this topic
+        try {
+            const response = await fetch(`/api/questions/${topic.id}`);
+            const result = await response.json();
+            const questions = result.data;
+
+            // Attach questions to topic object for compatibility with existing logic
+            const topicWithQuestions = { ...topic, questions: questions };
+
+            currentTopic = topicWithQuestions;
+            // Always start quiz in test mode
+            startQuiz(topicWithQuestions);
+        } catch (error) {
+            console.error('Error loading questions:', error);
+            alert('Failed to load questions. Is the server running?');
         }
     });
     return card;
@@ -135,9 +159,8 @@ function startQuiz(topic) {
     startTime = Date.now();
 
     // Shuffle questions for test mode
-    if (currentMode === 'test') {
-        currentQuestions = shuffleArray(currentQuestions);
-    }
+    // Shuffle questions for mock test
+    currentQuestions = shuffleArray(currentQuestions);
 
     document.getElementById('current-topic').textContent = topic.title;
     showScreen('quiz');
@@ -145,13 +168,9 @@ function startQuiz(topic) {
     // Timer only for test mode or optional? Let's keep timer for both but maybe hide it for learn mode?
     // User requirement: "good learning platform" usually means untimed practice.
     // Let's hide timer in learn mode.
-    if (currentMode === 'test') {
-        document.getElementById('timer').style.display = 'inline-block';
-        startTimer();
-    } else {
-        document.getElementById('timer').style.display = 'none';
-        stopTimer();
-    }
+    // Timer setup
+    document.getElementById('timer').style.display = 'inline-block';
+    startTimer();
 
     displayQuestion();
 }
@@ -240,9 +259,7 @@ function selectAnswer(selectedIndex) {
     });
 
     // Show feedback in learning mode
-    if (currentMode === 'learn') {
-        showFeedback(isCorrect, question.explanation);
-    }
+    // No immediate feedback in mock test mode
 
     // Hide skip button, show next/finish button
     document.getElementById('skip-btn').style.display = 'none';

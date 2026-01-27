@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SQL Mock Test - Test Your SQL Knowledge</title>
+    <title>SQL Master - Learn & Test Your Skills</title>
     <meta name="description"
         content="Master SQL with interactive quizzes and comprehensive mock tests. Learn database concepts and test your knowledge.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -54,16 +54,16 @@
                     </svg>
                 </div>
                 <h1 class="main-title">SQL Master</h1>
-                <p class="subtitle">Learn SQL concepts and test your knowledge with mock exams</p>
+                <p class="subtitle">Master SQL through interactive learning and comprehensive testing</p>
 
                 <div class="stats-container">
                     <div class="stat-card">
-                        <div class="stat-number">8</div>
-                        <div class="stat-label">Topics</div>
+                        <div class="stat-number" id="total-questions">50+</div>
+                        <div class="stat-label">Questions</div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-number">50+</div>
-                        <div class="stat-label">Questions</div>
+                        <div class="stat-number" id="topics-covered">8</div>
+                        <div class="stat-label">Topics</div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-number" id="user-score">0%</div>
@@ -71,32 +71,13 @@
                     </div>
                 </div>
 
-                <div class="mode-styles">
-                    <style>
-                        .mode-selection {
-                            display: grid;
-                            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-                            gap: 2rem;
-                            max-width: 800px;
-                            margin: 0 auto;
-                        }
-                    </style>
-                </div>
-
                 <div class="mode-selection">
-                    <button class="mode-btn learn-btn" id="learn-mode-btn">
-                        <div class="btn-icon">📚</div>
+                    <button class="mode-btn test-btn" id="start-test-btn"
+                        style="width: 100%; max-width: 400px; justify-content: center;">
+                        <div class="btn-icon">🎯</div>
                         <div class="btn-content">
-                            <h3>Learning Mode</h3>
-                            <p>Master concepts with tutorials and practice questions</p>
-                        </div>
-                    </button>
-
-                    <button class="mode-btn test-btn" id="start-test-btn">
-                        <div class="btn-icon">⏱️</div>
-                        <div class="btn-content">
-                            <h3>Mock Test Mode</h3>
-                            <p>Simulate exams with timed, randomized questions</p>
+                            <h3>Start Mock Test</h3>
+                            <p>Test your knowledge with timed quizzes</p>
                         </div>
                     </button>
                 </div>
@@ -120,27 +101,6 @@
             </div>
         </div>
 
-        <!-- Tutorial Screen -->
-        <div id="tutorial-screen" class="screen">
-            <div class="screen-header">
-                <button class="back-btn" id="back-to-topics-from-tutorial">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M19 12H5M12 19l-7-7 7-7" />
-                    </svg>
-                    Back to Topics
-                </button>
-                <h2 class="screen-title" id="tutorial-topic-title">Topic Tutorial</h2>
-            </div>
-
-            <div class="tutorial-content" id="tutorial-content">
-                <!-- Tutorial content will be injected here -->
-            </div>
-
-            <div class="tutorial-actions">
-                <button class="action-btn primary-btn" id="start-practice-btn">Start Practice Quiz</button>
-            </div>
-        </div>
-
         <!-- Quiz Screen -->
         <div id="quiz-screen" class="screen">
             <div class="quiz-header">
@@ -148,7 +108,7 @@
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M19 12H5M12 19l-7-7 7-7" />
                     </svg>
-                    Quit
+                    Back
                 </button>
                 <div class="quiz-info">
                     <div class="topic-name" id="current-topic"></div>
