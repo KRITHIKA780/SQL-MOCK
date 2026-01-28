@@ -15,12 +15,13 @@ let score = {
 // DOM Elements
 const screens = {
     home: document.getElementById('home-screen'),
+    registration: document.getElementById('registration-screen'),
+    dashboard: document.getElementById('dashboard-screen'),
     topic: document.getElementById('topic-screen'),
-    tutorial: document.getElementById('tutorial-screen'),
     quiz: document.getElementById('quiz-screen'),
     results: document.getElementById('results-screen'),
     review: document.getElementById('review-screen'),
-    registration: document.getElementById('registration-screen')
+    tutorial: document.getElementById('tutorial-screen')
 };
 
 let userRegistration = null; // Store user registration data
@@ -36,10 +37,37 @@ function handleStartTestClick() {
 document.addEventListener('DOMContentLoaded', () => {
     console.log('SQL Master App v2.0 - Initializing...');
     initializeEventListeners();
+    initializeInteractiveEffects();
+    checkExistingUser();
     loadTopics();
     updateStats();
     console.log('App initialized successfully!');
 });
+
+function checkExistingUser() {
+    const savedUser = localStorage.getItem('sql_user');
+    if (savedUser) {
+        userRegistration = JSON.parse(savedUser);
+        console.log('Returning user found:', userRegistration.name);
+        populateDashboard();
+        showScreen('dashboard');
+    }
+}
+
+// Interactive Micro-interactions
+function initializeInteractiveEffects() {
+    // Mouse tracking for "shiny" buttons
+    document.addEventListener('mousemove', (e) => {
+        const buttons = document.querySelectorAll('.mode-btn, .topic-card, .stat-card, .submit-btn, .dash-card, .dash-mode-item');
+        buttons.forEach(btn => {
+            const rect = btn.getBoundingClientRect();
+            const x = ((e.clientX - rect.left) / btn.clientWidth) * 100;
+            const y = ((e.clientY - rect.top) / btn.clientHeight) * 100;
+            btn.style.setProperty('--x', `${x}%`);
+            btn.style.setProperty('--y', `${y}%`);
+        });
+    });
+}
 
 // Event Listeners
 function initializeEventListeners() {
@@ -154,8 +182,43 @@ function handleRegistration(e) {
         gender
     };
 
-    // Proceed to topic selection
-    document.getElementById('topic-screen-title').textContent = `Welcome, ${name.split(' ')[0]}! Select a Topic`;
+    // Store in localStorage for persistence
+    localStorage.setItem('sql_user', JSON.stringify(userRegistration));
+
+    // Proceed to Dashboard
+    populateDashboard();
+    showScreen('dashboard');
+}
+
+function populateDashboard() {
+    if (!userRegistration) return;
+
+    const name = userRegistration.name.split(' ')[0];
+    document.getElementById('dash-welcome').textContent = `Welcome back, ${name}!`;
+    document.getElementById('dash-level-text').textContent = `Level: ${userRegistration.level.charAt(0).toUpperCase() + userRegistration.level.slice(1)}`;
+
+    // Get stats from localStorage or defaults
+    const stats = JSON.parse(localStorage.getItem('sql_stats')) || {
+        quizzesTaken: 0,
+        avgAccuracy: 0,
+        streak: 1,
+        bestScore: 0,
+        points: 0
+    };
+
+    document.getElementById('dash-quizzes').textContent = stats.quizzesTaken;
+    document.getElementById('dash-accuracy').textContent = `${stats.avgAccuracy}%`;
+    document.getElementById('dash-best-val').textContent = `Best: ${stats.bestScore}%`;
+    document.getElementById('dash-points-val').textContent = `${stats.points} Skill Points`;
+}
+
+function startMode(mode) {
+    currentMode = mode;
+    showScreen('topic');
+}
+
+function startMode(mode) {
+    currentMode = mode;
     showScreen('topic');
 }
 
@@ -177,8 +240,11 @@ function showScreen(screenName) {
     });
 
     if (screens[screenName]) {
-        screens[screenName].classList.add('active');
-        console.log('Screen activated:', screenName);
+        // Use a small timeout for a cleaner animation reset if coming from hidden
+        setTimeout(() => {
+            screens[screenName].classList.add('active');
+            console.log('Screen activated:', screenName);
+        }, 50);
     } else {
         console.error('Screen not found:', screenName);
     }

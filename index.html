@@ -10,19 +10,17 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
-    <!-- Background Animation -->
+    <!-- Immersive Background Support -->
     <div class="bg-animation">
-        <div class="code-line"></div>
-        <div class="code-line"></div>
-        <div class="code-line"></div>
-        <div class="code-line"></div>
-        <div class="code-line"></div>
+        <div class="mesh-layer"></div>
+        <div class="glow-blob blob-1"></div>
+        <div class="glow-blob blob-2"></div>
     </div>
 
     <!-- Main Container -->
@@ -226,13 +224,6 @@
                             </select>
                         </div>
 
-                        <div class="form-group">
-                            <label for="reg-phone" class="form-label">
-                                Phone Number <span class="optional-mark">(Optional)</span>
-                            </label>
-                            <input type="tel" id="reg-phone" class="form-input" placeholder="Enter your phone number">
-                        </div>
-
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="reg-age" class="form-label">
@@ -258,7 +249,7 @@
 
                         <div class="form-actions">
                             <button type="submit" class="submit-btn">
-                                <span class="btn-text">Start Mock Test</span>
+                                <span class="btn-text">Register & Enter Dashboard</span>
                                 <span class="btn-icon-right">→</span>
                             </button>
                         </div>
@@ -267,6 +258,76 @@
                             <span class="required-mark">*</span> Required fields
                         </p>
                     </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard Screen -->
+        <div id="dashboard-screen" class="screen">
+            <div class="container dashboard-container">
+                <div class="dashboard-header">
+                    <div class="user-profile">
+                        <div class="user-avatar" id="dash-avatar">👤</div>
+                        <div class="user-info">
+                            <h2 id="dash-welcome">Welcome back, Explorer!</h2>
+                            <p id="dash-level-text">Level: Beginner</p>
+                        </div>
+                    </div>
+                    <div class="dashboard-actions">
+                        <button class="action-btn secondary-btn" id="logout-btn">
+                            Logout
+                        </button>
+                    </div>
+                </div>
+
+                <div class="dashboard-grid">
+                    <!-- Mastery Card -->
+                    <div class="dash-card mastery-card">
+                        <h3>Your Mastery Progress</h3>
+                        <div class="mastery-content">
+                            <div class="mastery-stats">
+                                <div class="m-stat">
+                                    <span class="m-val" id="dash-quizzes">0</span>
+                                    <span class="m-lab">Tests Taken</span>
+                                </div>
+                                <div class="m-stat">
+                                    <span class="m-val" id="dash-accuracy">0%</span>
+                                    <span class="m-lab">Avg. Accuracy</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mode Toggle Card -->
+                    <div class="dash-card modes-card">
+                        <h3>Choose Your Path</h3>
+                        <div class="dash-modes">
+                            <div class="dash-mode-item" onclick="startMode('learn')">
+                                <span class="mode-icon">📚</span>
+                                <div class="mode-text">
+                                    <h4>Learn Topics</h4>
+                                    <p>Step-by-step SQL tutorials</p>
+                                </div>
+                            </div>
+                            <div class="dash-mode-item" onclick="startMode('mock')">
+                                <span class="mode-icon">🏁</span>
+                                <div class="mode-text">
+                                    <h4>Mock Test</h4>
+                                    <p>Challenge your knowledge</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Achievements -->
+                    <div class="dash-card achievement-card">
+                        <h3>Growth Highlights</h3>
+                        <div class="achieve-list">
+                            <div class="ach-item">🔥 <span id="dash-streak-val">1 Day Streak</span></div>
+                            <div class="ach-item">🎯 <span id="dash-best-val">Best: 0%</span></div>
+                            <div class="ach-item">💎 <span id="dash-points-val">0 Skill Points</span></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
