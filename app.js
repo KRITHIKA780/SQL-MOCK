@@ -210,7 +210,28 @@ function populateDashboard() {
     document.getElementById('dash-accuracy').textContent = `${stats.avgAccuracy}%`;
     document.getElementById('dash-best-val').textContent = `${stats.bestScore}%`;
     document.getElementById('dash-streak-val').textContent = `${stats.streak} Day${stats.streak !== 1 ? 's' : ''}`;
-    document.getElementById('dash-points-val').textContent = stats.points;
+    // document.getElementById('dash-points-val').textContent = stats.points; // Removed from grid in new layout
+
+    // Update Mastery Wheel
+    const masteryPercentage = stats.avgAccuracy || 0;
+    const circle = document.getElementById('mastery-wheel-fill');
+    const text = document.getElementById('mastery-percentage');
+
+    if (circle && text) {
+        const radius = 90;
+        const circumference = 2 * Math.PI * radius;
+        const offset = circumference - (masteryPercentage / 100) * circumference;
+
+        // Reset first to trigger animation if re-entering
+        circle.style.strokeDasharray = `${circumference} ${circumference}`;
+        circle.style.strokeDashoffset = circumference;
+
+        setTimeout(() => {
+            circle.style.transition = 'stroke-dashoffset 1.5s cubic-bezier(0.4, 0, 0.2, 1)';
+            circle.style.strokeDashoffset = offset;
+            text.textContent = `${masteryPercentage}%`;
+        }, 100);
+    }
 }
 
 function startMode(mode) {
@@ -239,7 +260,6 @@ function showScreen(screenName) {
         // Use a small timeout for a cleaner animation reset if coming from hidden
         setTimeout(() => {
             screens[screenName].classList.add('active');
-            document.body.className = `screen-${screenName}`; // Add class to body
             console.log('Screen activated:', screenName);
         }, 50);
     } else {
