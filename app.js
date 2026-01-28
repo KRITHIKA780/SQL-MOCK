@@ -208,8 +208,8 @@ function populateDashboard() {
 
     document.getElementById('dash-quizzes').textContent = stats.quizzesTaken;
     document.getElementById('dash-accuracy').textContent = `${stats.avgAccuracy}%`;
-    document.getElementById('dash-best-val').textContent = `Best: ${stats.bestScore}%`;
-    document.getElementById('dash-points-val').textContent = `${stats.points} Skill Points`;
+    document.getElementById('dash-points').textContent = stats.points;
+    document.getElementById('dash-streak-val').textContent = `🔥 ${stats.streak} Day Streak`;
 }
 
 function startMode(mode) {
@@ -217,10 +217,6 @@ function startMode(mode) {
     showScreen('topic');
 }
 
-function startMode(mode) {
-    currentMode = mode;
-    showScreen('topic');
-}
 
 // Mode Selection
 function selectMode(mode) {

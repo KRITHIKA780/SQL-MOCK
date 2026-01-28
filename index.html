@@ -280,52 +280,60 @@
                     </div>
                 </div>
 
-                <div class="dashboard-grid">
-                    <!-- Mastery Card -->
-                    <div class="dash-card mastery-card">
-                        <h3>Your Mastery Progress</h3>
-                        <div class="mastery-content">
-                            <div class="mastery-stats">
-                                <div class="m-stat">
-                                    <span class="m-val" id="dash-quizzes">0</span>
-                                    <span class="m-lab">Tests Taken</span>
-                                </div>
-                                <div class="m-stat">
-                                    <span class="m-val" id="dash-accuracy">0%</span>
-                                    <span class="m-lab">Avg. Accuracy</span>
-                                </div>
-                            </div>
+                <div class="dashboard-grid-3">
+                    <!-- Topics Pillar -->
+                    <div class="dash-pillar topics-pillar" onclick="startMode('learn')">
+                        <div class="pillar-bg"></div>
+                        <div class="pillar-content">
+                            <span class="pillar-icon">📚</span>
+                            <h3>SQL Topics</h3>
+                            <p>Master specific SQL concepts with interactive tutorials.</p>
+                            <ul class="pillar-features">
+                                <li>Basics & Filtering</li>
+                                <li>Joins & Unions</li>
+                                <li>Group Functions</li>
+                            </ul>
+                            <div class="pillar-action">Enter Library →</div>
                         </div>
                     </div>
 
-                    <!-- Mode Toggle Card -->
-                    <div class="dash-card modes-card">
-                        <h3>Choose Your Path</h3>
-                        <div class="dash-modes">
-                            <div class="dash-mode-item" onclick="startMode('learn')">
-                                <span class="mode-icon">📚</span>
-                                <div class="mode-text">
-                                    <h4>Learn Topics</h4>
-                                    <p>Step-by-step SQL tutorials</p>
-                                </div>
-                            </div>
-                            <div class="dash-mode-item" onclick="startMode('mock')">
-                                <span class="mode-icon">🏁</span>
-                                <div class="mode-text">
-                                    <h4>Mock Test</h4>
-                                    <p>Challenge your knowledge</p>
-                                </div>
-                            </div>
+                    <!-- Mock Test Pillar -->
+                    <div class="dash-pillar mock-pillar" onclick="startMode('mock')">
+                        <div class="pillar-bg"></div>
+                        <div class="pillar-content">
+                            <span class="pillar-icon">🏁</span>
+                            <h3>Mock Test</h3>
+                            <p>Simulate a real-world SQL interview exam.</p>
+                            <ul class="pillar-features">
+                                <li>Random Questions</li>
+                                <li>Timed Sessions</li>
+                                <li>Full Evaluation</li>
+                            </ul>
+                            <div class="pillar-action">Start Exam →</div>
                         </div>
                     </div>
 
-                    <!-- Achievements -->
-                    <div class="dash-card achievement-card">
-                        <h3>Growth Highlights</h3>
-                        <div class="achieve-list">
-                            <div class="ach-item">🔥 <span id="dash-streak-val">1 Day Streak</span></div>
-                            <div class="ach-item">🎯 <span id="dash-best-val">Best: 0%</span></div>
-                            <div class="ach-item">💎 <span id="dash-points-val">0 Skill Points</span></div>
+                    <!-- Stats Pillar -->
+                    <div class="dash-pillar stats-pillar">
+                        <div class="pillar-bg"></div>
+                        <div class="pillar-content">
+                            <span class="pillar-icon">📈</span>
+                            <h3>Your Performance</h3>
+                            <div class="pillar-stats">
+                                <div class="p-stat">
+                                    <span class="p-val" id="dash-quizzes">0</span>
+                                    <span class="p-lab">Tests</span>
+                                </div>
+                                <div class="p-stat">
+                                    <span class="p-val" id="dash-accuracy">0%</span>
+                                    <span class="p-lab">Acc.</span>
+                                </div>
+                                <div class="p-stat">
+                                    <span class="p-val" id="dash-points">0</span>
+                                    <span class="p-lab">Points</span>
+                                </div>
+                            </div>
+                            <div class="pillar-streak" id="dash-streak-val">🔥 1 Day Streak</div>
                         </div>
                     </div>
                 </div>
