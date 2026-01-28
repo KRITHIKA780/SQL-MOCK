@@ -239,6 +239,7 @@ function showScreen(screenName) {
         // Use a small timeout for a cleaner animation reset if coming from hidden
         setTimeout(() => {
             screens[screenName].classList.add('active');
+            document.body.className = `screen-${screenName}`; // Add class to body
             console.log('Screen activated:', screenName);
         }, 50);
     } else {
