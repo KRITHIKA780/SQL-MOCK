@@ -167,15 +167,17 @@ function initializeEventListeners() {
 
 // Handle Registration
 function handleRegistration(e) {
-    if (e) e.preventDefault();
+    const formData = new FormData(e.target);
     const name = document.getElementById('reg-name').value;
     const level = document.getElementById('reg-level').value;
+    const phone = document.getElementById('reg-phone').value;
     const age = document.getElementById('reg-age').value;
     const gender = document.getElementById('reg-gender').value;
 
     userRegistration = {
         name,
         level,
+        phone,
         age,
         gender
     };
@@ -188,21 +190,12 @@ function handleRegistration(e) {
     showScreen('dashboard');
 }
 
-function handleLogout() {
-    localStorage.removeItem('sql_user');
-    userRegistration = null;
-    showScreen('home');
-}
-
 function populateDashboard() {
     if (!userRegistration) return;
 
     const name = userRegistration.name.split(' ')[0];
-    const welcomeEl = document.getElementById('dash-welcome');
-    if (welcomeEl) welcomeEl.textContent = `Welcome back, ${name}!`;
-
-    const levelEl = document.getElementById('dash-level-text');
-    if (levelEl) levelEl.textContent = userRegistration.level.charAt(0).toUpperCase() + userRegistration.level.slice(1);
+    document.getElementById('dash-welcome').textContent = `Welcome back, ${name}!`;
+    document.getElementById('dash-level-text').textContent = `Level: ${userRegistration.level.charAt(0).toUpperCase() + userRegistration.level.slice(1)}`;
 
     // Get stats from localStorage or defaults
     const stats = JSON.parse(localStorage.getItem('sql_stats')) || {
@@ -213,45 +206,25 @@ function populateDashboard() {
         points: 0
     };
 
-    // Update Text Stats
-    const quizzesEl = document.getElementById('dash-quizzes');
-    if (quizzesEl) quizzesEl.textContent = stats.quizzesTaken;
-
-    const accuracyEl = document.getElementById('dash-accuracy');
-    if (accuracyEl) accuracyEl.textContent = `${stats.avgAccuracy}%`;
-
-    const bestValEl = document.getElementById('dash-best-val');
-    if (bestValEl) bestValEl.textContent = `${stats.bestScore}%`;
-
-    const pointsEl = document.getElementById('dash-points-val');
-    if (pointsEl) pointsEl.textContent = stats.points;
-
-    const streakEl = document.getElementById('dash-streak-val');
-    if (streakEl) streakEl.textContent = `${stats.streak} Day${stats.streak !== 1 ? 's' : ''}`;
-
-    // Mastery Wheel Animation
-    const wheelFill = document.getElementById('mastery-wheel-fill');
-    if (wheelFill) {
-        const radius = 45;
-        const circumference = 2 * Math.PI * radius; // ~282.7
-        const offset = circumference - (stats.avgAccuracy / 100) * circumference;
-
-        // Trigger animation after a small delay
-        setTimeout(() => {
-            wheelFill.style.strokeDasharray = `${circumference} ${circumference}`;
-            wheelFill.style.strokeDashoffset = offset;
-        }, 100);
-    }
+    document.getElementById('dash-quizzes').textContent = stats.quizzesTaken;
+    document.getElementById('dash-accuracy').textContent = `${stats.avgAccuracy}%`;
+    document.getElementById('dash-best-val').textContent = `${stats.bestScore}%`;
+    document.getElementById('dash-streak-val').textContent = `${stats.streak} Day${stats.streak !== 1 ? 's' : ''}`;
+    document.getElementById('dash-points-val').textContent = stats.points;
 }
 
 function startMode(mode) {
     currentMode = mode;
-    const title = mode === 'learn' ? 'Choose Your Topic to Learn' : 'Select a Topic for Mock Test';
-    const topicTitleEl = document.getElementById('topic-screen-title');
-    if (topicTitleEl) topicTitleEl.textContent = title;
     showScreen('topic');
 }
 
+// Mode Selection
+function selectMode(mode) {
+    currentMode = mode;
+    const title = mode === 'learn' ? 'Select a Topic to Learn' : 'Select a Topic for Mock Test';
+    document.getElementById('topic-screen-title').textContent = title;
+    showScreen('topic');
+}
 
 // Screen Management
 function showScreen(screenName) {

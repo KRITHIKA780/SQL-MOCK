@@ -266,6 +266,7 @@
         <div id="dashboard-screen" class="screen">
             <div class="hero-section dashboard-hero">
                 <div class="logo-container">
+                    <!-- Reuse the logo SVG for brand consistency -->
                     <svg class="logo-icon" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <rect x="10" y="20" width="80" height="60" rx="8" stroke="url(#dash-grad1)" stroke-width="3"
                             fill="none" />
@@ -273,107 +274,70 @@
                         <circle cx="20" cy="27.5" r="2" fill="url(#dash-grad1)" />
                         <circle cx="30" cy="27.5" r="2" fill="url(#dash-grad1)" />
                         <circle cx="40" cy="27.5" r="2" fill="url(#dash-grad1)" />
+                        <line x1="20" y1="50" x2="80" y2="50" stroke="url(#dash-grad2)" stroke-width="2" />
+                        <line x1="20" y1="60" x2="70" y2="60" stroke="url(#dash-grad2)" stroke-width="2" />
+                        <line x1="20" y1="70" x2="75" y2="70" stroke="url(#dash-grad2)" stroke-width="2" />
                         <defs>
                             <linearGradient id="dash-grad1" x1="0%" y1="0%" x2="100%" y2="100%">
                                 <stop offset="0%" style="stop-color:#00d2ff;stop-opacity:1" />
-                                <stop offset="100%" style="stop-color:#9d50bb;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#3a7bd5;stop-opacity:1" />
+                            </linearGradient>
+                            <linearGradient id="dash-grad2" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" style="stop-color:#f067b4;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#833ab4;stop-opacity:1" />
                             </linearGradient>
                         </defs>
                     </svg>
                 </div>
-                <h1 class="main-title dash-brand">SQL MASTER</h1>
-                <p class="subtitle dash-welcome-text" id="dash-welcome">Welcome back, Explorer!</p>
+                <h1 class="main-title">SQL MASTER</h1>
+                <p class="subtitle" id="dash-welcome">Welcome back, Explorer!</p>
+                <p class="subtitle-small" id="dash-level-text">Level: Beginner</p>
 
-                <div class="dashboard-actions-top">
-                    <button class="logout-btn-minimal" id="logout-btn-action" onclick="handleLogout()">
-                        <span>Sign Out</span>
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9" />
-                        </svg>
+                <div class="stats-container">
+                    <div class="stat-card">
+                        <div class="stat-number" id="dash-quizzes">0</div>
+                        <div class="stat-label">Tests Taken</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="dash-accuracy">0%</div>
+                        <div class="stat-label">Accuracy</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="dash-best-val">0%</div>
+                        <div class="stat-label">Best Score</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="dash-streak-val">1 Day</div>
+                        <div class="stat-label">Streak</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="dash-points-val">0</div>
+                        <div class="stat-label">Skill Points</div>
+                    </div>
+                </div>
+
+                <div class="mode-selection dash-actions-grid">
+                    <button class="mode-btn learn-btn" onclick="startMode('learn')">
+                        <div class="btn-icon">📚</div>
+                        <div class="btn-content">
+                            <h3>Learn Topics</h3>
+                            <p>Master SQL concepts</p>
+                        </div>
+                    </button>
+                    <button class="mode-btn test-btn" onclick="startMode('mock')">
+                        <div class="btn-icon">🏁</div>
+                        <div class="btn-content">
+                            <h3>Mock Test</h3>
+                            <p>Test your skills</p>
+                        </div>
                     </button>
                 </div>
 
-                <div class="dashboard-pillars">
-                    <!-- Pillar 1: Mastery Wheel -->
-                    <div class="pillar dash-card mastery-pillar">
-                        <div class="pillar-header">
-                            <span class="pillar-label">Current Mastery</span>
-                            <span class="pillar-badge" id="dash-level-text">Beginner</span>
-                        </div>
-                        <div class="mastery-wheel-container">
-                            <svg class="mastery-svg" viewBox="0 0 100 100">
-                                <circle class="wheel-bg" cx="50" cy="50" r="45" />
-                                <circle class="wheel-fill" id="mastery-wheel-fill" cx="50" cy="50" r="45" />
-                            </svg>
-                            <div class="wheel-center">
-                                <span class="wheel-val" id="dash-accuracy">0%</span>
-                                <span class="wheel-label">Score</span>
-                            </div>
-                        </div>
-                        <div class="mastery-meta">
-                            <div class="m-point">
-                                <span class="m-val" id="dash-quizzes">0</span>
-                                <span class="m-lab">Tests</span>
-                            </div>
-                            <div class="m-point">
-                                <span class="m-val" id="dash-points-val">0</span>
-                                <span class="m-lab">Points</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Pillar 2: Path Selection -->
-                    <div class="pillar dash-card path-pillar">
-                        <div class="pillar-header">
-                            <span class="pillar-label">Your Path</span>
-                        </div>
-                        <div class="path-options">
-                            <button class="path-btn primary-path" onclick="startMode('learn')">
-                                <div class="path-icon">📚</div>
-                                <div class="path-info">
-                                    <h3>Browse Topics</h3>
-                                    <p>Interactive Tutorials</p>
-                                </div>
-                                <div class="path-arrow">→</div>
-                            </button>
-                            <button class="path-btn secondary-path" onclick="startMode('mock')">
-                                <div class="path-icon">�</div>
-                                <div class="path-info">
-                                    <h3>Mock Test</h3>
-                                    <p>Full-Skill Evaluation</p>
-                                </div>
-                                <div class="path-arrow">→</div>
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Pillar 3: Milestones -->
-                    <div class="pillar dash-card milestone-pillar">
-                        <div class="pillar-header">
-                            <span class="pillar-label">Milestones</span>
-                        </div>
-                        <div class="milestone-list">
-                            <div class="milestone-item active">
-                                <div class="ms-icon">🔥</div>
-                                <div class="ms-content">
-                                    <span class="ms-title">SQL Streak</span>
-                                    <span class="ms-val" id="dash-streak-val">1 Day</span>
-                                </div>
-                            </div>
-                            <div class="milestone-item">
-                                <div class="ms-icon">🏆</div>
-                                <div class="ms-content">
-                                    <span class="ms-title">Personal Best</span>
-                                    <span class="ms-val" id="dash-best-val">0%</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="dashboard-footer">
+                    <button class="action-btn secondary-btn" id="logout-btn">Logout</button>
                 </div>
             </div>
         </div>
-
 
         <!-- Results Screen -->
         <div id="results-screen" class="screen">
