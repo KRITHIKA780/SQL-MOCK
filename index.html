@@ -72,7 +72,7 @@
                 </div>
 
                 <div class="mode-selection">
-                    <button class="mode-btn test-btn" id="start-test-btn"
+                    <button class="mode-btn test-btn" id="start-test-btn" onclick="handleStartTestClick()"
                         style="width: 100%; max-width: 400px; justify-content: center;">
                         <div class="btn-icon">🎯</div>
                         <div class="btn-content">
@@ -148,6 +148,92 @@
                     <button class="action-btn secondary-btn" id="skip-btn">Skip Question</button>
                     <button class="action-btn primary-btn" id="next-btn" style="display: none;">Next Question</button>
                     <button class="action-btn primary-btn" id="finish-btn" style="display: none;">Finish Quiz</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Registration Screen -->
+        <div id="registration-screen" class="screen">
+            <div class="screen-header">
+                <button class="back-btn" id="back-to-home-from-reg">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M19 12H5M12 19l-7-7 7-7" />
+                    </svg>
+                    Back
+                </button>
+                <h2 class="screen-title">Candidate Registration</h2>
+            </div>
+
+            <div class="registration-container">
+                <div class="registration-card">
+                    <div class="registration-header">
+                        <div class="registration-icon">📝</div>
+                        <h3 class="registration-title">Complete Your Profile</h3>
+                        <p class="registration-subtitle">Please fill in your details to start the mock test</p>
+                    </div>
+
+                    <form id="registration-form" class="registration-form">
+                        <div class="form-group">
+                            <label for="reg-name" class="form-label">
+                                Full Name <span class="required-mark">*</span>
+                            </label>
+                            <input type="text" id="reg-name" class="form-input" required
+                                placeholder="Enter your full name">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="reg-level" class="form-label">
+                                Experience Level <span class="required-mark">*</span>
+                            </label>
+                            <select id="reg-level" class="form-input form-select" required>
+                                <option value="" disabled selected>Select your level</option>
+                                <option value="beginner">🌱 Beginner - Just starting with SQL</option>
+                                <option value="intermediate">📈 Intermediate - Know the basics</option>
+                                <option value="advanced">🚀 Advanced - Experienced with SQL</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="reg-phone" class="form-label">
+                                Phone Number <span class="optional-mark">(Optional)</span>
+                            </label>
+                            <input type="tel" id="reg-phone" class="form-input" placeholder="Enter your phone number">
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="reg-age" class="form-label">
+                                    Age <span class="optional-mark">(Optional)</span>
+                                </label>
+                                <input type="number" id="reg-age" class="form-input" min="1" max="100"
+                                    placeholder="Your age">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="reg-gender" class="form-label">
+                                    Gender <span class="optional-mark">(Optional)</span>
+                                </label>
+                                <select id="reg-gender" class="form-input form-select">
+                                    <option value="" selected>Select gender</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                    <option value="other">Other</option>
+                                    <option value="prefer-not-to-say">Prefer not to say</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="submit-btn">
+                                <span class="btn-text">Start Mock Test</span>
+                                <span class="btn-icon-right">→</span>
+                            </button>
+                        </div>
+
+                        <p class="form-note">
+                            <span class="required-mark">*</span> Required fields
+                        </p>
+                    </form>
                 </div>
             </div>
         </div>

@@ -19,46 +19,139 @@ const screens = {
     tutorial: document.getElementById('tutorial-screen'),
     quiz: document.getElementById('quiz-screen'),
     results: document.getElementById('results-screen'),
-    review: document.getElementById('review-screen')
+    review: document.getElementById('review-screen'),
+    registration: document.getElementById('registration-screen')
 };
+
+let userRegistration = null; // Store user registration data
+
+// Global function for button click (inline onclick backup)
+function handleStartTestClick() {
+    console.log('handleStartTestClick called!');
+    currentMode = 'test';
+    showScreen('registration');
+}
 
 // Initialize App
 document.addEventListener('DOMContentLoaded', () => {
+    console.log('SQL Master App v2.0 - Initializing...');
     initializeEventListeners();
     loadTopics();
     updateStats();
+    console.log('App initialized successfully!');
 });
 
 // Event Listeners
 function initializeEventListeners() {
+    console.log('Setting up event listeners...');
+
     // Mode selection
     const startBtn = document.getElementById('start-test-btn');
     if (startBtn) {
+        console.log('Start button found, attaching click handler');
         startBtn.addEventListener('click', () => {
+            console.log('Start Mock Test clicked!');
             currentMode = 'test';
-            document.getElementById('topic-screen-title').textContent = 'Select a Topic for Mock Test';
-            showScreen('topic');
+            showScreen('registration');
+        });
+    } else {
+        console.error('Start button not found!');
+    }
+
+    // Registration Form
+    const regForm = document.getElementById('registration-form');
+    if (regForm) {
+        regForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            handleRegistration(e);
         });
     }
 
-    // Navigation
-    document.getElementById('back-to-home').addEventListener('click', () => showScreen('home'));
-    document.getElementById('back-to-topics').addEventListener('click', () => showScreen('topic'));
-    document.getElementById('back-to-topics-from-tutorial').addEventListener('click', () => showScreen('topic'));
-    document.getElementById('back-to-results').addEventListener('click', () => showScreen('results'));
+    // Navigation - with null checks
+    const backToHomeFromReg = document.getElementById('back-to-home-from-reg');
+    if (backToHomeFromReg) {
+        backToHomeFromReg.addEventListener('click', () => showScreen('home'));
+    }
+
+    const backToHome = document.getElementById('back-to-home');
+    if (backToHome) {
+        backToHome.addEventListener('click', () => showScreen('home'));
+    }
+
+    const backToTopics = document.getElementById('back-to-topics');
+    if (backToTopics) {
+        backToTopics.addEventListener('click', () => showScreen('topic'));
+    }
+
+    const backToTopicsFromTutorial = document.getElementById('back-to-topics-from-tutorial');
+    if (backToTopicsFromTutorial) {
+        backToTopicsFromTutorial.addEventListener('click', () => showScreen('topic'));
+    }
+
+    const backToResults = document.getElementById('back-to-results');
+    if (backToResults) {
+        backToResults.addEventListener('click', () => showScreen('results'));
+    }
 
     // Tutorial actions
-    document.getElementById('start-practice-btn').addEventListener('click', () => startQuiz(currentTopic));
+    const startPracticeBtn = document.getElementById('start-practice-btn');
+    if (startPracticeBtn) {
+        startPracticeBtn.addEventListener('click', () => startQuiz(currentTopic));
+    }
 
     // Quiz actions
-    document.getElementById('skip-btn').addEventListener('click', skipQuestion);
-    document.getElementById('next-btn').addEventListener('click', nextQuestion);
-    document.getElementById('finish-btn').addEventListener('click', finishQuiz);
+    const skipBtn = document.getElementById('skip-btn');
+    if (skipBtn) {
+        skipBtn.addEventListener('click', skipQuestion);
+    }
+
+    const nextBtn = document.getElementById('next-btn');
+    if (nextBtn) {
+        nextBtn.addEventListener('click', nextQuestion);
+    }
+
+    const finishBtn = document.getElementById('finish-btn');
+    if (finishBtn) {
+        finishBtn.addEventListener('click', finishQuiz);
+    }
 
     // Results actions
-    document.getElementById('review-btn').addEventListener('click', showReview);
-    document.getElementById('retry-btn').addEventListener('click', retryQuiz);
-    document.getElementById('home-btn').addEventListener('click', () => showScreen('home'));
+    const reviewBtn = document.getElementById('review-btn');
+    if (reviewBtn) {
+        reviewBtn.addEventListener('click', showReview);
+    }
+
+    const retryBtn = document.getElementById('retry-btn');
+    if (retryBtn) {
+        retryBtn.addEventListener('click', retryQuiz);
+    }
+
+    const homeBtn = document.getElementById('home-btn');
+    if (homeBtn) {
+        homeBtn.addEventListener('click', () => showScreen('home'));
+    }
+}
+
+// Handle Registration
+function handleRegistration(e) {
+    const formData = new FormData(e.target);
+    const name = document.getElementById('reg-name').value;
+    const level = document.getElementById('reg-level').value;
+    const phone = document.getElementById('reg-phone').value;
+    const age = document.getElementById('reg-age').value;
+    const gender = document.getElementById('reg-gender').value;
+
+    userRegistration = {
+        name,
+        level,
+        phone,
+        age,
+        gender
+    };
+
+    // Proceed to topic selection
+    document.getElementById('topic-screen-title').textContent = `Welcome, ${name.split(' ')[0]}! Select a Topic`;
+    showScreen('topic');
 }
 
 // Mode Selection
@@ -71,8 +164,19 @@ function selectMode(mode) {
 
 // Screen Management
 function showScreen(screenName) {
-    Object.values(screens).forEach(screen => screen.classList.remove('active'));
-    screens[screenName].classList.add('active');
+    console.log('Switching to screen:', screenName);
+    console.log('Available screens:', Object.keys(screens));
+
+    Object.values(screens).forEach(screen => {
+        if (screen) screen.classList.remove('active');
+    });
+
+    if (screens[screenName]) {
+        screens[screenName].classList.add('active');
+        console.log('Screen activated:', screenName);
+    } else {
+        console.error('Screen not found:', screenName);
+    }
 
     if (screenName === 'home') {
         resetQuiz();
