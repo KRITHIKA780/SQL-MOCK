@@ -72,6 +72,14 @@
                 </div>
 
                 <div class="mode-selection">
+                    <button class="mode-btn learn-btn" id="start-learn-btn" onclick="selectMode('learn')"
+                        style="width: 100%; max-width: 400px; justify-content: center; margin-bottom: 1rem;">
+                        <div class="btn-icon">📚</div>
+                        <div class="btn-content">
+                            <h3>Learn Topics</h3>
+                            <p>Study SQL concepts with interactive tutorials</p>
+                        </div>
+                    </button>
                     <button class="mode-btn test-btn" id="start-test-btn" onclick="handleStartTestClick()"
                         style="width: 100%; max-width: 400px; justify-content: center;">
                         <div class="btn-icon">🎯</div>
@@ -98,6 +106,31 @@
 
             <div class="topics-grid" id="topics-grid">
                 <!-- Topics will be dynamically inserted here -->
+            </div>
+        </div>
+
+        <!-- Tutorial Screen -->
+        <div id="tutorial-screen" class="screen">
+            <div class="screen-header">
+                <button class="back-btn" id="back-to-topics-from-tutorial">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M19 12H5M12 19l-7-7 7-7" />
+                    </svg>
+                    Back to Topics
+                </button>
+                <h2 class="screen-title" id="tutorial-topic-title">Learning Topic</h2>
+            </div>
+            <div class="tutorial-container">
+                <div class="tutorial-glass-card">
+                    <div id="tutorial-content" class="tutorial-content">
+                        <!-- Tutorial content will be inserted here -->
+                    </div>
+                </div>
+                <div class="tutorial-actions">
+                    <button class="action-btn primary-btn" id="start-practice-btn">
+                        <span class="btn-icon">✍️</span> Start Practice Quiz
+                    </button>
+                </div>
             </div>
         </div>
 

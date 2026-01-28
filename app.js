@@ -48,14 +48,19 @@ function initializeEventListeners() {
     // Mode selection
     const startBtn = document.getElementById('start-test-btn');
     if (startBtn) {
-        console.log('Start button found, attaching click handler');
         startBtn.addEventListener('click', () => {
             console.log('Start Mock Test clicked!');
             currentMode = 'test';
             showScreen('registration');
         });
-    } else {
-        console.error('Start button not found!');
+    }
+
+    const learnBtn = document.getElementById('start-learn-btn');
+    if (learnBtn) {
+        learnBtn.addEventListener('click', () => {
+            console.log('Learn Topics clicked!');
+            selectMode('learn');
+        });
     }
 
     // Registration Form
@@ -234,10 +239,13 @@ function createTopicCard(topic) {
 
             // Attach questions to topic object for compatibility with existing logic
             const topicWithQuestions = { ...topic, questions: questions };
-
             currentTopic = topicWithQuestions;
-            // Always start quiz in test mode
-            startQuiz(topicWithQuestions);
+
+            if (currentMode === 'learn') {
+                showTutorial(topicWithQuestions);
+            } else {
+                startQuiz(topicWithQuestions);
+            }
         } catch (error) {
             console.error('Error loading questions:', error);
             alert('Failed to load questions. Is the server running?');
