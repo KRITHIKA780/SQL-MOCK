@@ -167,17 +167,15 @@ function initializeEventListeners() {
 
 // Handle Registration
 function handleRegistration(e) {
-    const formData = new FormData(e.target);
+    if (e) e.preventDefault();
     const name = document.getElementById('reg-name').value;
     const level = document.getElementById('reg-level').value;
-    const phone = document.getElementById('reg-phone').value;
     const age = document.getElementById('reg-age').value;
     const gender = document.getElementById('reg-gender').value;
 
     userRegistration = {
         name,
         level,
-        phone,
         age,
         gender
     };
@@ -190,12 +188,21 @@ function handleRegistration(e) {
     showScreen('dashboard');
 }
 
+function handleLogout() {
+    localStorage.removeItem('sql_user');
+    userRegistration = null;
+    showScreen('home');
+}
+
 function populateDashboard() {
     if (!userRegistration) return;
 
     const name = userRegistration.name.split(' ')[0];
-    document.getElementById('dash-welcome').textContent = `Welcome back, ${name}!`;
-    document.getElementById('dash-level-text').textContent = `Level: ${userRegistration.level.charAt(0).toUpperCase() + userRegistration.level.slice(1)}`;
+    const welcomeEl = document.getElementById('dash-welcome');
+    if (welcomeEl) welcomeEl.textContent = `Welcome back, ${name}!`;
+
+    const levelEl = document.getElementById('dash-level-text');
+    if (levelEl) levelEl.textContent = userRegistration.level.charAt(0).toUpperCase() + userRegistration.level.slice(1);
 
     // Get stats from localStorage or defaults
     const stats = JSON.parse(localStorage.getItem('sql_stats')) || {
@@ -206,36 +213,45 @@ function populateDashboard() {
         points: 0
     };
 
-    const qText = document.getElementById('dash-quizzes');
-    if (qText) qText.textContent = stats.quizzesTaken;
+    // Update Text Stats
+    const quizzesEl = document.getElementById('dash-quizzes');
+    if (quizzesEl) quizzesEl.textContent = stats.quizzesTaken;
 
-    const accText = document.getElementById('dash-accuracy');
-    if (accText) accText.textContent = `${stats.avgAccuracy}%`;
+    const accuracyEl = document.getElementById('dash-accuracy');
+    if (accuracyEl) accuracyEl.textContent = `${stats.avgAccuracy}%`;
 
-    const streakNum = document.getElementById('dash-streak-val-num');
-    if (streakNum) streakNum.textContent = stats.streak;
+    const bestValEl = document.getElementById('dash-best-val');
+    if (bestValEl) bestValEl.textContent = `${stats.bestScore}%`;
 
-    const pointsText = document.getElementById('dash-points-val');
-    if (pointsText) pointsText.textContent = stats.points;
+    const pointsEl = document.getElementById('dash-points-val');
+    if (pointsEl) pointsEl.textContent = stats.points;
+
+    const streakEl = document.getElementById('dash-streak-val');
+    if (streakEl) streakEl.textContent = `${stats.streak} Day${stats.streak !== 1 ? 's' : ''}`;
+
+    // Mastery Wheel Animation
+    const wheelFill = document.getElementById('mastery-wheel-fill');
+    if (wheelFill) {
+        const radius = 45;
+        const circumference = 2 * Math.PI * radius; // ~282.7
+        const offset = circumference - (stats.avgAccuracy / 100) * circumference;
+
+        // Trigger animation after a small delay
+        setTimeout(() => {
+            wheelFill.style.strokeDasharray = `${circumference} ${circumference}`;
+            wheelFill.style.strokeDashoffset = offset;
+        }, 100);
+    }
 }
 
 function startMode(mode) {
     currentMode = mode;
+    const title = mode === 'learn' ? 'Choose Your Topic to Learn' : 'Select a Topic for Mock Test';
+    const topicTitleEl = document.getElementById('topic-screen-title');
+    if (topicTitleEl) topicTitleEl.textContent = title;
     showScreen('topic');
 }
 
-function startMode(mode) {
-    currentMode = mode;
-    showScreen('topic');
-}
-
-// Mode Selection
-function selectMode(mode) {
-    currentMode = mode;
-    const title = mode === 'learn' ? 'Select a Topic to Learn' : 'Select a Topic for Mock Test';
-    document.getElementById('topic-screen-title').textContent = title;
-    showScreen('topic');
-}
 
 // Screen Management
 function showScreen(screenName) {
