@@ -264,13 +264,14 @@
 
         <!-- Dashboard Screen -->
         <div id="dashboard-screen" class="screen">
+            <div class="dashboard-bg-overlay"></div>
             <div class="container dashboard-container">
                 <div class="dashboard-header">
                     <div class="user-profile">
                         <div class="user-avatar" id="dash-avatar">👤</div>
                         <div class="user-info">
-                            <h2 id="dash-welcome">Welcome back, Explorer!</h2>
-                            <p id="dash-level-text">Level: Beginner</p>
+                            <h2 id="dash-welcome">Welcome, Explorer!</h2>
+                            <p id="dash-level-text">SQL Mastery Level: Beginner</p>
                         </div>
                     </div>
                     <div class="dashboard-actions">
@@ -280,60 +281,49 @@
                     </div>
                 </div>
 
-                <div class="dashboard-grid-3">
-                    <!-- Topics Pillar -->
-                    <div class="dash-pillar topics-pillar" onclick="startMode('learn')">
-                        <div class="pillar-bg"></div>
-                        <div class="pillar-content">
-                            <span class="pillar-icon">📚</span>
-                            <h3>SQL Topics</h3>
-                            <p>Master specific SQL concepts with interactive tutorials.</p>
-                            <ul class="pillar-features">
-                                <li>Basics & Filtering</li>
-                                <li>Joins & Unions</li>
-                                <li>Group Functions</li>
-                            </ul>
-                            <div class="pillar-action">Enter Library →</div>
+                <div class="dashboard-grid">
+                    <!-- Topics Block -->
+                    <div class="dash-card main-nav-card" onclick="startMode('learn')">
+                        <div class="card-glow"></div>
+                        <div class="card-icon">📚</div>
+                        <div class="card-content">
+                            <h3>Learn Topics</h3>
+                            <p>Master SQL concepts through interactive modules and tutorials.</p>
                         </div>
+                        <div class="card-arrow">→</div>
                     </div>
 
-                    <!-- Mock Test Pillar -->
-                    <div class="dash-pillar mock-pillar" onclick="startMode('mock')">
-                        <div class="pillar-bg"></div>
-                        <div class="pillar-content">
-                            <span class="pillar-icon">🏁</span>
+                    <!-- Mock Test Block -->
+                    <div class="dash-card main-nav-card" onclick="startMode('test')">
+                        <div class="card-glow"></div>
+                        <div class="card-icon">🏁</div>
+                        <div class="card-content">
                             <h3>Mock Test</h3>
-                            <p>Simulate a real-world SQL interview exam.</p>
-                            <ul class="pillar-features">
-                                <li>Random Questions</li>
-                                <li>Timed Sessions</li>
-                                <li>Full Evaluation</li>
-                            </ul>
-                            <div class="pillar-action">Start Exam →</div>
+                            <p>Challenge yourself with time-bound tests and get certified.</p>
                         </div>
+                        <div class="card-arrow">→</div>
                     </div>
 
-                    <!-- Stats Pillar -->
-                    <div class="dash-pillar stats-pillar">
-                        <div class="pillar-bg"></div>
-                        <div class="pillar-content">
-                            <span class="pillar-icon">📈</span>
-                            <h3>Your Performance</h3>
-                            <div class="pillar-stats">
-                                <div class="p-stat">
-                                    <span class="p-val" id="dash-quizzes">0</span>
-                                    <span class="p-lab">Tests</span>
-                                </div>
-                                <div class="p-stat">
-                                    <span class="p-val" id="dash-accuracy">0%</span>
-                                    <span class="p-lab">Acc.</span>
-                                </div>
-                                <div class="p-stat">
-                                    <span class="p-val" id="dash-points">0</span>
-                                    <span class="p-lab">Points</span>
-                                </div>
+                    <!-- Progress Block -->
+                    <div class="dash-card stats-card-refined">
+                        <div class="card-glow"></div>
+                        <h3>Your Mastery</h3>
+                        <div class="refined-stats-grid">
+                            <div class="ref-stat">
+                                <span class="ref-val" id="dash-quizzes">0</span>
+                                <span class="ref-lab">Tests</span>
                             </div>
-                            <div class="pillar-streak" id="dash-streak-val">🔥 1 Day Streak</div>
+                            <div class="ref-stat">
+                                <span class="ref-val" id="dash-accuracy">0%</span>
+                                <span class="ref-lab">Accuracy</span>
+                            </div>
+                            <div class="ref-stat">
+                                <span class="ref-val" id="dash-streak-val-num">1</span>
+                                <span class="ref-lab">Streak</span>
+                            </div>
+                        </div>
+                        <div class="achievement-highlight">
+                            <span id="dash-points-val">0</span> Skill Points
                         </div>
                     </div>
                 </div>
