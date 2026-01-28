@@ -206,10 +206,17 @@ function populateDashboard() {
         points: 0
     };
 
-    document.getElementById('dash-quizzes').textContent = stats.quizzesTaken;
-    document.getElementById('dash-accuracy').textContent = `${stats.avgAccuracy}%`;
-    document.getElementById('dash-points').textContent = stats.points;
-    document.getElementById('dash-streak-val').textContent = `🔥 ${stats.streak} Day Streak`;
+    const qText = document.getElementById('dash-quizzes');
+    if (qText) qText.textContent = stats.quizzesTaken;
+
+    const accText = document.getElementById('dash-accuracy');
+    if (accText) accText.textContent = `${stats.avgAccuracy}%`;
+
+    const streakNum = document.getElementById('dash-streak-val-num');
+    if (streakNum) streakNum.textContent = stats.streak;
+
+    const pointsText = document.getElementById('dash-points-val');
+    if (pointsText) pointsText.textContent = stats.points;
 }
 
 function startMode(mode) {
@@ -217,6 +224,10 @@ function startMode(mode) {
     showScreen('topic');
 }
 
+function startMode(mode) {
+    currentMode = mode;
+    showScreen('topic');
+}
 
 // Mode Selection
 function selectMode(mode) {
